@@ -1,0 +1,315 @@
+/* Studio About sites: what we add on top of Peter's 4.0 stylesheet (sa.css, unchanged).
+   Each block says which job it carries. The look stays Peter's: his colours, squares, circles,
+   pills, the 1080 field, letters black or white. */
+
+/* ---- fonts: the designer's free Gilroy Light and ExtraBold, as About Collab serves them since
+   15 Oct 2026 (DEC-032; licence in AboutCollab/aboutcollab-website/licences). Bold (700) renders
+   as ExtraBold. Peter's sheet asked for Gilroy from the visitor's own machine, which almost no
+   visitor has, so every page fell back to a system font. ---- */
+@font-face{font-family:'Gilroy';src:url('fonts/Gilroy-Light.otf') format('opentype');font-weight:100 500;font-display:swap}
+@font-face{font-family:'Gilroy';src:url('fonts/Gilroy-ExtraBold.otf') format('opentype');font-weight:600 900;font-display:swap}
+
+/* ---- readability: About Collab's D28 type scale (Helena, 16 Oct: "too hard to read, it's untidy").
+   Running text 20, card text 18, titles 24 / 42 / 56. ---- */
+:root:root{--p:clamp(17px,calc(var(--sq) * .0379),20px);--card:clamp(17px,calc(var(--sq) * .0341),18px);
+  --h1:clamp(36px,4vw,56px);--h2:clamp(30px,2.9vw,42px);--h3:clamp(21px,1.65vw,24px)}
+@media (max-width:380px){:root:root:root{--h2:min(30px,7.8vw)}}
+main :is(h1,h2,h3){text-wrap:balance}
+/* a paragraph of four lines or more flows as normal text, left-aligned, 45 to 75 characters a
+   line (his breaks stay in the source; titles and short statements keep them) */
+.sa-flow{max-width:36em;text-align:left}
+.sa-flow .ln{display:inline}
+.sa-flow .sg{display:inline}
+.t-item,.sq-t{font-size:max(var(--small),min(var(--k,var(--card)),var(--card)))}
+
+/* skip link (accessibility floor) */
+.sa-skip{position:absolute;left:12px;top:-60px;z-index:300;background:#000;color:#fff;padding:10px 16px;font-weight:700;text-decoration:none}
+.sa-skip:focus{top:12px}
+
+/* ---- the opening: Peter's two squares, carrying the positioning (Helena's job): who we are, that
+   every price is published, the room's price, one orange ask. ---- */
+.sa-oin.sa-pos{gap:3.6cqw}
+.sa-pos .sa-tstage{width:86%}
+.sa-pos .sa-tbullet{left:-8.6cqw}
+.sa-h1pos{font-weight:700;font-size:max(22px,min(6.4cqw,34px));line-height:1.12;letter-spacing:-.005em}
+.sa-h1pos em{font-style:normal;box-shadow:inset 0 -.32em 0 var(--yellow)}
+.sa-pricetag{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:max(var(--small),min(4.1cqw,21px));line-height:1.3}
+.sa-pricetag b{font-weight:800}
+.sa-pricetag span{white-space:nowrap}
+.sa-pricetag i{display:inline-block;width:10px;height:10px;background:var(--orange);margin-right:8px;vertical-align:.08em}
+.sa-pricetag span:nth-child(2) i{border-radius:50%;background:var(--purple)}
+.sa-pos .sa-btn.big{font-size:var(--s17);padding:13px 24px}
+/* the proof line under the opening, as on aboutcollab.com since 18 Oct: the two or three things
+   a buyer asks first, so the page does not look finished at the fold */
+.sa-proof{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;margin:26px auto 0;padding:0 20px;font-weight:700;font-size:clamp(18px,1.7vw,23px);line-height:1.3;text-align:center}
+.sa-proof span{display:inline-flex;align-items:center;gap:10px}
+.sa-proof i{display:block;width:12px;height:12px;background:var(--orange);flex:none}
+.sa-proof span:nth-child(2) i{border-radius:50%;background:var(--purple)}
+.sa-proof span:nth-child(3) i{background:var(--green)}
+.sa-open-wrap{margin-bottom:var(--gap)}
+.sa-open-wrap>.sa-open{margin:0 auto}
+
+/* ---- the written routes beside the one ask (About Collab D31): WhatsApp, call, email as black
+   pills of equal weight; orange stays the one main ask ---- */
+.sa-routes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:6px}
+.sa-route{display:inline-flex;align-items:center;font-weight:700;font-size:var(--small);line-height:1.1;padding:10px 18px;border-radius:50px;background:#000;color:#fff;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}
+.sa-route:hover{background:var(--orange);color:#000}
+.sa-close .sa-btn.big{margin-top:10px}
+
+/* ---- sizes led by people (Helena, 1 Sep): three squares, how many and how they sit first,
+   the hourly price second, square metres last and small ---- */
+.sa-size .sq-t{line-height:1.45}
+.sa-size .sa-eur{display:block;font-weight:800;font-size:max(26px,min(11cqw,46px));line-height:1;margin:2cqw 0 1cqw}
+.sa-size .sa-eur small{font-size:.42em;font-weight:700}
+.sa-size .sa-m2{display:block;font-size:var(--small);opacity:.85}
+
+/* ---- price lists: plain, scannable, every line its price ---- */
+.sa-plist{width:min(820px,100%);text-align:left;border-collapse:collapse;font-size:var(--card)}
+.sa-plist caption{text-align:left;font-weight:800;font-size:var(--h3);padding:0 0 10px}
+.sa-plist td,.sa-plist th{padding:12px 6px;border-top:1px solid rgba(0,0,0,.14);vertical-align:top}
+.sa-plist th{font-weight:700;text-align:left}
+.sa-plist td.eur{text-align:right;white-space:nowrap;font-weight:800}
+.sa-plist small{display:block;font-size:var(--small);line-height:1.4;font-weight:300}
+.sa-plists{display:grid;grid-template-columns:1fr;gap:40px;width:100%;justify-items:center}
+.sa-note{font-size:var(--small);line-height:1.5;max-width:46em;text-align:left}
+
+/* ---- the calculator, in Peter's booking layout (steps on the left, "Your day" on the right) ---- */
+.sa-chips .sa-chip small{font-weight:300;margin-left:6px}
+.sa-chip.on small{opacity:.85}
+.sa-chip[disabled]{opacity:.35;cursor:not-allowed}
+.sa-cgroup{margin:14px 0 6px;font-weight:700;font-size:var(--small)}
+.sa-cgroup:first-child{margin-top:0}
+.sa-serve{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:var(--s17)}
+.sa-serve input{width:90px;font:inherit;font-weight:700;border:2px solid #000;padding:8px 10px}
+.sa-tick{display:flex;align-items:flex-start;gap:12px;font-size:var(--s17);line-height:1.45;margin-top:14px;cursor:pointer}
+.sa-tick input{width:22px;height:22px;accent-color:#000;flex:none;margin-top:2px}
+.sa-acnote{width:100%;font:inherit;font-size:var(--s17);font-weight:300;border:2px solid #000;padding:10px 12px;margin-top:10px}
+.sa-sp .eur{font-weight:800}
+.sa-sumin .r-line{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:10px 0;border-top:1px solid rgba(0,0,0,.14);font-size:var(--small);line-height:1.4}
+.sa-sumin .r-line small{display:block;font-size:15px;opacity:.75}
+.sa-sumin .r-line .v{font-weight:800;white-space:nowrap;text-align:right}
+.sa-sumin .r-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0 6px;border-top:2px solid #000;font-weight:800;font-size:22px}
+.sa-sumin .r-sub{display:flex;justify-content:space-between;gap:12px;font-size:var(--small);padding:3px 0}
+.sa-sumin .r-note,.sa-sumin .r-empty{font-size:var(--small);line-height:1.45;margin-top:12px}
+.sa-sumin .r-warn{font-size:var(--small);line-height:1.45;margin-top:10px;padding:10px;background:var(--yellow)}
+.sa-sumin .r-meta{font-size:var(--small);line-height:1.45;padding-bottom:6px}
+.sa-sendnote{font-size:var(--s17);line-height:1.45;margin-top:14px;max-width:34em}
+.sa-sendrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:24px}
+.sa-sum{top:calc(var(--bar) + 84px)!important}
+/* the phone's pinned running total */
+.sa-mini{position:fixed;left:0;right:0;bottom:0;z-index:95;background:#000;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px calc(12px + env(safe-area-inset-bottom));font-weight:700}
+.sa-mini[hidden]{display:none}
+.sa-mini a{color:#000;background:var(--orange);border-radius:50px;padding:9px 16px;text-decoration:none;font-size:var(--small)}
+@media (min-width:1000px){.sa-mini{display:none!important}}
+.sa-sent{border:2px solid #000;background:#fff;padding:20px;margin-top:20px}
+.sa-sent[hidden]{display:none}
+
+/* ---- the map loads only when asked (no Google cookies before a click, as About Collab keeps
+   Calendly a link, DEC-019) ---- */
+.sa-mapbtn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:0;background:#e9e9e4;color:#000;font:inherit;font-weight:700;font-size:var(--s17);cursor:pointer;padding:20px;text-align:center}
+.sa-mapbtn small{font-weight:300;font-size:var(--small)}
+.sa-mapbtn:hover{background:var(--cyan)}
+
+/* ---- a still of the newest 3D, whole, with its caption (Peter's rule: pictures first, the model after) ---- */
+.sa-view{width:100%;margin:0}
+.sa-view img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f3f1ea}
+.sa-view figcaption{font-size:var(--small);line-height:1.45;margin-top:10px;text-align:center}
+.sa-views{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;width:100%}
+@media (max-width:700px){.sa-views{grid-template-columns:1fr}}
+.sa-model{position:relative;width:100%;aspect-ratio:16/10;background:#f3f1ea;overflow:hidden}
+.sa-model img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sa-model iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sa-model .sa-btn{position:absolute;left:50%;bottom:22px;translate:-50% 0}
+
+/* ---- the tenant site: the offer in one line, and the deal as a tag ---- */
+.sa-deal{display:flex;flex-direction:column;align-items:center;gap:6px}
+.sa-deal .sa-eur{font-weight:800;font-size:clamp(44px,6vw,72px);line-height:1}
+.sa-deal .sa-eur small{font-size:.36em}
+.sa-deal p{font-size:var(--p)}
+.sa-dims{display:inline-block;border:2px solid #000;padding:6px 14px;font-weight:700;font-size:var(--small)}
+
+.sa-proofsec{margin-top:calc(24px - var(--gap))!important}
+.sa-proofsec .sa-proof{margin-top:0}
+.sa-close .sa-routes{margin-top:18px}
+
+/* the opening photo square on a phone: the photo whole */
+@media (max-width:1024px){.sa-pos{padding-block:4%}}
+@media (max-width:700px){
+  .sa-h1pos{font-size:max(24px,7.6cqw)}
+  .sa-proof{font-size:18px;gap:8px 18px}
+  .sa-plist td,.sa-plist th{padding:10px 2px}
+}
+
+/* ---- the studios site as a real site (21 Oct, Helena: "it's not a one pager"): ---- */
+/* the opening square holds a drawing of the whole space, shown whole */
+.sa-osq.sa-photo img.sa-whole{height:auto;width:100%;aspect-ratio:16/10;object-fit:cover}
+/* the four studios, one price: four small flat squares in Peter's colours */
+.sa-four{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:min(900px,100%)}
+.sa-fsq{aspect-ratio:1/1;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:10px;text-align:center;font-size:var(--small);line-height:1.3}
+.sa-fsq b{font-size:clamp(28px,3.4vw,44px);line-height:1;font-weight:800}
+.sa-fsq span{font-weight:700}
+@media (max-width:700px){.sa-four{grid-template-columns:repeat(2,1fr);gap:12px}}
+/* side by side: one table, the sizes as rows, you and our guests as columns (line on line) */
+.sa-cmp{width:min(900px,100%);border-collapse:collapse;text-align:left;font-size:var(--card)}
+.sa-cmp th,.sa-cmp td{padding:14px 8px;border-top:1px solid rgba(0,0,0,.14);vertical-align:top}
+.sa-cmp thead th{border-top:0;font-size:var(--small);font-weight:700}
+.sa-cmp td.eur{white-space:nowrap;font-weight:800;text-align:right}
+.sa-cmp thead th.eur{text-align:right}
+.sa-cmp td.you{background:var(--yellow)}
+.sa-cmp small{display:block;font-size:var(--small);font-weight:300;line-height:1.4}
+@media (max-width:700px){.sa-cmp th,.sa-cmp td{padding:12px 4px}.sa-cmp{font-size:17px}}
+/* the month calculator: a number with − and +, as Peter's people counter */
+.sa-num{display:flex;align-items:center;gap:12px}
+.sa-num input{width:90px;font:inherit;font-weight:700;font-size:28px;text-align:center;border:2px solid #000;padding:6px;background:#fff;color:#000}
+.sa-num span{font-size:var(--s17)}
+.sa-sumin .r-note b{font-weight:800}
+/* a part of the story that goes on: the next page, beside the one ask */
+.sa-next{font-weight:700}
+/* the month calculator numbers its steps as Peter's booking form does (his counter lives on .sa-form) */
+#month{counter-reset:bs}
+/* the studios site, 21 Oct round 2 */
+/* Peter's 3D in the opening square: the space right there, four set-ups to click (Helena) */
+.sa-o3d{padding:4%;justify-content:center}
+.sa-o3d .sa3d{gap:12px}
+.sa-o3d .sa3d-stage{aspect-ratio:4/3;border-width:6px}
+.sa-o3d .sa3d-pills{gap:8px}
+.sa-o3d .sa-pill{font-size:15px;padding:7px 14px 7px 10px}
+.sa-o3d .sa3d-cap{color:#fff;font-size:var(--small)}
+@media (max-width:1024px){.sa-osq.sa-o3d{aspect-ratio:auto}}
+/* three stills: the first wide, two below */
+.sa-views3>:first-child{grid-column:1/-1}
+/* the line between the two levels and the facts */
+.sa-mid{margin-top:8px}
+/* the calculator: the discount stands out */
+.sa-sumin .r-off .v{color:var(--green)}
+.sa-sumin .r-save{font-size:var(--small);line-height:1.45;margin-top:12px;padding:10px 12px;background:var(--yellow)}
+.sa-sumin .r-save b{font-weight:800}
+/* four stills: the first wide, three below */
+.sa-views4{grid-template-columns:repeat(3,1fr)}
+.sa-views4>:first-child{grid-column:1/-1}
+@media (max-width:700px){.sa-views4{grid-template-columns:1fr}}
+/* the opening's four set-up pills on one row */
+.sa-o3d .sa3d-pills{flex-wrap:nowrap;gap:6px}
+.sa-o3d .sa-pill{font-size:14px;padding:6px 11px 6px 8px;gap:6px}
+.sa-o3d .sa-pill .ic{--ic:16px}
+@media (max-width:420px){.sa-o3d .sa3d-pills{flex-wrap:wrap}}
+/* the opening's 3D: Peter's photo-square rule (img: display block, 86cqw high) must not reach the 3D's own
+   still and turntable frames, or the hidden still covers the live model and nothing moves (Helena, 21 Oct) */
+.sa-o3d .sa3d-still,.sa-o3d .sa3d-turn{width:100%;height:100%;max-width:none}
+.sa-o3d .sa3d-still[hidden],.sa-o3d .sa3d-turn[hidden]{display:none}
+/* the four doors of the studios site: two by two, the title beside them, so the title and all four fit on one
+   screen at a good size (Helena, 21 Oct: in a row of four they "got way too small"). The square follows the
+   screen's height as well as its width, so the four always fit under the bar. */
+@media (min-width:1000px){
+  .sa-partsplit{display:grid;grid-template-columns:340px auto;column-gap:48px;align-items:center;justify-content:center}
+  .sa-partsplit>.sa-float{text-align:left;align-items:flex-start;padding:0}
+  .sa-partsplit>.sa-sqs{--sqd:min(336px, calc((100vh / var(--z) - var(--bar) - 120px) / 2), calc((100vw / var(--z) - 2 * var(--gut) - 404px) / 2));
+    grid-template-columns:repeat(2,var(--sqd));gap:16px}
+}
+/* the six doors of the studios site, three by two under their title, sized so title and doors fit one
+   screen (Helena, 21 Oct: the event space, the studios, the community, the deal, the house, join us) */
+@media (min-width:1000px){
+  .sa-sqs.sa-doors6{--sq6:min(330px, calc((100vh / var(--z) - var(--bar) - 290px) / 2), calc((100vw / var(--z) - 2 * var(--gut) - 32px) / 3));
+    grid-template-columns:repeat(3,var(--sq6));gap:16px}
+  .sa-host:has(.sa-doors6)>.sa-float{padding-bottom:22px;gap:8px}
+  .sa-host:has(.sa-doors6)>.sa-float>h2{margin-bottom:6px}
+}
+/* two communities, one offer: Het Salon's part, ours, and the sum (Helena, 21 Oct) */
+.sa-stack{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:min(900px,100%);text-align:left;margin-top:8px}
+.sa-stack>div{background:var(--bg);color:var(--fg);padding:28px 28px 30px}
+.sa-stack h3{font-size:var(--h3);font-weight:800;margin:0 0 16px}
+.sa-stack ul{list-style:none;padding:0;margin:0;display:grid;gap:12px;font-size:var(--card);line-height:1.4}
+.sa-stack li{display:grid;grid-template-columns:14px 1fr;gap:12px;align-items:start}
+.sa-stack li i{display:block;width:12px;height:12px;margin-top:.38em;background:currentColor}
+.sa-stack li:nth-child(even) i{border-radius:50%}
+.sa-stacksum{grid-column:1/-1;background:#000;color:#fff;padding:22px 28px;font-weight:700;font-size:var(--p);line-height:1.4;text-align:center;margin:0}
+@media (max-width:700px){.sa-stack{grid-template-columns:1fr}.sa-stack>div{padding:22px}}
+.sa-hslogo{display:block;width:fit-content;margin:0 auto 18px}
+.sa-hslogo img{display:block;height:72px;width:auto}
+/* your community: Studio About's logo + Het Salon's logo, big, then what each gives under it (Helena, 21 Oct) */
+.sa-logos{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(16px,3vw,40px);width:min(900px,100%);margin:6px 0 22px}
+.sa-lg{display:flex;justify-content:center;align-items:center}
+.sa-lg svg{width:min(260px,100%)!important}
+.sa-lg img{display:block;width:min(240px,100%);height:auto}
+.sa-plusbig{position:relative;width:clamp(36px,4.4vw,56px);aspect-ratio:1/1}
+.sa-plusbig i{position:absolute;background:var(--orange)}
+.sa-plusbig i:first-child{left:0;right:0;top:50%;height:28%;translate:0 -50%}
+.sa-plusbig i:last-child{top:0;bottom:0;left:50%;width:28%;translate:-50% 0}
+.sa-stacksum{font-size:clamp(20px,2vw,26px)!important;font-weight:800!important}
+.sa-eq{display:inline-block;color:var(--orange);margin-right:10px}
+.sa-igline{margin:-8px 0 22px;font-size:var(--small);font-weight:700}
+.sa-igline a{color:inherit;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:5px}
+/* ---- every page of the studios site opens like its home page (Helena, 21 Oct) ---- */
+.sa-subopen .sa-lt{margin:0 0 2px}
+.sa-subopen .sa-lt svg{max-width:100%;height:auto}
+.sa-subline{font-size:max(20px,min(5.4cqw,30px))!important}
+.sa-subopen .sa-pricetag span{white-space:normal}
+[data-c=p] .sa-proof{color:#fff}
+/* a picture filling the right square, with a small label */
+.sa-osq.sa-fillsq{padding:0;overflow:hidden;background:#000;margin:0}
+.sa-fillsq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.sa-chiplabel{position:absolute;left:14px;bottom:14px;background:#000;color:#fff;font-weight:700;font-size:var(--small);line-height:1.2;padding:8px 14px;border-radius:50px;max-width:calc(100% - 28px)}
+/* the community: the two logos, stacked, on ice */
+.sa-osq.sa-logosq{background:var(--ice);flex-direction:column;gap:5cqw;padding:9%}
+.sa-logosq .sa-lg svg{width:62cqw!important}
+.sa-logosq .sa-lg img{width:52cqw}
+.sa-logosq .sa-plusbig{width:11cqw}
+.sa-iglink{font-weight:700;font-size:max(var(--small),3.6cqw);color:#000;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:5px}
+/* the deal: four studios as four coloured squares, filling the right square */
+.sa-osq.sa-foursq{display:grid;grid-template-columns:1fr 1fr;gap:3cqw;padding:0;align-items:stretch}
+.sa-foursq .sa-fsq{aspect-ratio:auto;font-size:max(15px,3.6cqw)}
+.sa-foursq .sa-fsq b{font-size:max(26px,9cqw)}
+/* the sum under the two communities: orange, not black (Helena, 21 Oct: "everything is very black") */
+.sa-stacksum{background:var(--orange)!important;color:#000!important}
+.sa-eq{color:#000!important}
+.sa-subopen .sa-lt{width:100%;display:flex;justify-content:center}
+[data-c=g] .sa-proof span:nth-child(3) i{background:var(--yellow)}
+[data-c=y] .sa-proof span:nth-child(3) i{background:var(--green)}
+
+/* The market block on the deal page (Helena, 26 Oct 2026): the typical Amsterdam price per size, our guests, you;
+   the venues behind each price on hover or a tap. */
+.sa-mkt td.mkt{background:var(--ice)}
+.sa-mkt small.un{font-weight:700;opacity:1;color:var(--green)}
+.sa-mkt td.you small.un{color:#000}
+.sa-src{position:relative;display:block;margin-top:8px;text-align:right;white-space:normal}
+.sa-srcb{font:inherit;font-size:15px;font-weight:700;background:#fff;color:#000;border:2px solid #000;border-radius:50px;padding:3px 12px 3px 4px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;line-height:1.3}
+.sa-srcb:hover,.sa-src.open .sa-srcb{background:#000;color:#fff}
+.sa-i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:800;font-style:italic}
+.sa-pop{display:none;position:absolute;z-index:40;top:100%;left:0;margin-top:6px;width:400px;max-width:calc(100vw - 32px);background:#fff;color:#000;border:2px solid #000;box-shadow:6px 6px 0 #000;padding:14px 16px 12px;text-align:left;font-weight:300;font-size:16px;line-height:1.4;white-space:normal}
+.sa-src.open .sa-pop{display:block}
+.sa-poph{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.sa-poph b{font-weight:800}
+.sa-popx{font:inherit;font-size:24px;line-height:1;background:none;border:0;cursor:pointer;padding:0 2px;color:#000}
+.sa-pop ol{list-style:none;margin:0;padding:0}
+.sa-pop li{display:grid;grid-template-columns:1fr auto;gap:0 12px;padding:8px 0;border-top:1px solid rgba(0,0,0,.14)}
+.sa-pop li .sv{font-weight:700}
+.sa-pop li .sv a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.sa-pop li .sv small{display:block;font-weight:300;font-size:15px}
+.sa-pop li b{font-weight:800;white-space:nowrap}
+.sa-pop li small.sp{grid-column:1/-1;font-size:14px;opacity:.75}
+.sa-popf{margin:8px 0 0;padding-top:8px;border-top:2px solid #000;font-size:15px}
+.sa-popf b{font-weight:800}
+@media (max-width:700px){
+  .sa-pop{position:fixed;left:16px;right:16px;top:auto;bottom:16px;width:auto;max-width:none;max-height:72vh;overflow:auto;margin:0}
+  .sa-srcb{font-size:14px}
+}
+.sa-sumin .r-ref .v{opacity:.7;font-weight:700}
+.sa-sumin .r-you{font-weight:700}
+.sa-sumin .r-you .v{font-size:20px}
+.sa-mkt th small.sm{display:none}
+.sa-srcb{white-space:nowrap}
+@media (max-width:700px){.sa-mkt th small.lg{display:none}.sa-mkt th small.sm{display:block}.sa-srcb{font-size:13px;padding:2px 9px 2px 3px}.sa-i{width:18px;height:18px;font-size:12px}}
+
+/* Peter's feedback, 27 Oct, studios site only (the classes sa-sqlogo, sa-stackproof and sa-six are added by the
+   studios generator; the event site does not use them): the community's two logos are exactly square; the six
+   doors on the home page are bigger and square, with a blank line under each title; each proof line stands alone. */
+.sa-osq.sa-sqlogo{aspect-ratio:1/1;overflow:hidden;gap:3.5cqw;padding:8%}
+.sa-sqlogo .sa-lg svg{width:50cqw!important}
+.sa-sqlogo .sa-lg img{width:40cqw}
+.sa-sqlogo .sa-plusbig{width:9cqw}
+.sa-sqlogo .sa-iglink{font-size:max(var(--small),3cqw)}
+.sa-proof.sa-stackproof{flex-direction:column;flex-wrap:nowrap;align-items:center;gap:8px}
+.sa-six .sq-t{margin-top:1.1em}
+@media (min-width:1000px){
+  .sa-sqs.sa-doors6.sa-six{--sq6:min(400px, calc((100vw / var(--z) - 2 * var(--gut) - 40px) / 3));gap:20px}
+}

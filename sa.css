@@ -1,0 +1,568 @@
+/* Studio About website 4.0: the stylesheet (engine/studio_site4.mjs copies it to the site as sa.css).
+   About Collab's 2.0 system (round 46), renamed sa-, calmer, in Studio About's colours. One type scale, white
+   fields 1080 wide on one flat colour that flows with the scroll, exact squares, rails edge to edge, pills, the
+   90% laptop scale, the purple foot. Letters black or white only (rule 3). Nothing to read under 16 px. */
+
+/* Gilroy from the visitor's own machine only (as both sites do: the web licence is an open question) */
+@font-face{font-family:'Gilroy';src:local('Gilroy-Light'),local('Gilroy Light');font-weight:300 400;font-display:swap}
+@font-face{font-family:'Gilroy';src:local('Gilroy-Bold'),local('Gilroy Bold');font-weight:600 800;font-display:swap}
+
+:root{
+  --orange:#FF6501;--green:#019999;--purple:#6400CC;--ice:#DEEBF7;--cyan:#27EEEA;--yellow:#FFCB00;--blue:#392BD4;
+  --z:1;--gut:clamp(16px,4vw,56px);--field:1080px;--gap:clamp(64px,9vw,128px);--bar:94px;--logo:124px;
+  /* a square: two side by side fill the 1080 column exactly (24 px between) */
+  --sq:min(528px, calc((100vw / var(--z) - 2 * var(--gut) - 24px) / 2));
+  --sq3:var(--sq);
+  --sqo:min(528px, calc(100vw - 32px));
+  --p:clamp(17px, calc(var(--sq) * .0445), 23.5px);
+  --h1:clamp(36px,4.8vw,66px);--h2:clamp(30px,3.6vw,52px);--h3:clamp(21px,2.1vw,30px);
+  --ease:cubic-bezier(.3,.7,.4,1);
+  /* the smallest text: 16 px, and 18 px under the 90% laptop scale (16.2 on the screen) */
+  --small:16px;--s17:17px;
+}
+/* the 90% laptop scale (About Collab round 45): every full-screen measure divides by --z */
+@media (min-width:1025px){
+  :root{--z:.9;--small:18px;--s17:18px;--bar:104px;--logo:136px;--sqo:var(--sq);--sq3:min(344px, calc((100vw / var(--z) - 2 * var(--gut) - 48px) / 3))}
+  html{zoom:.9}
+}
+@media (max-width:700px){:root{--sq:calc(100vw - 32px)}}
+@media (max-width:380px){:root{--h2:min(30px,7.8vw)}}
+
+*,*::before,*::after{box-sizing:border-box}
+/* the one offset for every jump (pills, the set-up squares, #space3d): under the bar and the floating pills. No
+   scroll-margin on the parts as well, or the two add up and a jump lands far too low */
+html{background:#fff;scroll-behavior:smooth;scroll-padding-top:calc(var(--bar) + 70px);overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:transparent;color:#000;font-family:'Gilroy',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-weight:300;font-size:var(--p);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video,iframe,canvas{max-width:100%}
+a{color:inherit}
+b,strong{font-weight:700}
+h1,h2,h3,p,figure,ul,ol{margin:0}
+h1,h2,h3{font-weight:700}
+button{font-family:inherit}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:3px solid #000;outline-offset:3px}
+
+/* hand-set lines (rule 10): a line is a block; below 1000 px a piece between the | marks wraps as a whole */
+.ln{display:block}
+.ln.gap{height:.7em}
+@media (max-width:999px){.sg{display:inline-block}}
+
+/* the colour layer: one flat colour that flows with the scroll (sa.js writes --c on <html>) */
+.sa-colorbg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--c,#fff)}
+
+/* the draft line at the very top */
+.sa-draft{background:#fff;color:#000;font-size:var(--small);line-height:1.4;text-align:center;padding:6px 16px;margin:0}
+
+/* ---- the top bar: white, the logo (at least 120 px on screen, one dot of clear space round it), the menu, Book -- */
+.sa-top{position:sticky;top:0;z-index:100;background:#fff;height:var(--bar)}
+.sa-bar{max-width:1240px;height:100%;margin:0 auto;padding:0 clamp(16px,3vw,50px);display:flex;align-items:center}
+.sa-logo{display:block;flex:none;padding:13px 0}
+.sa-logo svg{width:var(--logo)!important}
+.sa-menu{display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);margin-left:auto}
+.sa-menu a{font-weight:700;font-size:18px;line-height:1.2;text-decoration:none;white-space:nowrap;padding:6px 0 3px;border-bottom:3px solid transparent;transition:border-color .2s}
+.sa-menu a:hover{border-color:var(--cyan)}
+.sa-menu a[aria-current]{border-color:var(--orange)}
+.sa-book{display:inline-flex;align-items:center;gap:10px;flex:none;background:#000;color:#fff;border-radius:50px;padding:11px 22px 11px 18px;font-weight:700;font-size:18px;line-height:1.1;text-decoration:none;white-space:nowrap;margin-left:clamp(18px,2vw,30px);transition:background .2s,color .2s}
+.sa-book i{display:block;width:14px;height:14px;background:var(--orange);transition:translate .5s var(--ease)}
+.sa-book:hover,.sa-book[aria-current]{background:var(--orange);color:#000}
+.sa-book:hover i,.sa-book[aria-current] i{background:var(--green)}
+.sa-book:hover i{animation:sa-hop .8s var(--ease)}
+.sa-burger{display:none;flex:none;width:44px;height:44px;margin-left:14px;border:0;background:none;padding:0;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.sa-burger i{display:block;width:26px;height:3px;background:#000;transition:translate .3s,opacity .3s}
+.sa-burger[aria-expanded=true] i:nth-of-type(1){translate:0 8px}
+.sa-burger[aria-expanded=true] i:nth-of-type(2){opacity:0}
+.sa-burger[aria-expanded=true] i:nth-of-type(3){translate:0 -8px}
+.sa-panel{background:#fff;padding:8px 20px 24px;display:flex;flex-direction:column;border-top:1px solid rgba(0,0,0,.12)}
+.sa-panel[hidden]{display:none}
+.sa-panel a{font-weight:700;font-size:20px;padding:12px 0;text-decoration:none}
+.sa-panel a[aria-current]{text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:6px}
+@media (max-width:1199px){.sa-menu a{font-size:var(--s17)}.sa-menu{gap:12px}.sa-book{font-size:var(--s17)}}
+@media (max-width:1099px){.sa-menu a{font-size:var(--small)}.sa-menu{gap:10px}.sa-book{font-size:var(--small);padding:10px 18px 10px 15px}}
+@media (min-width:1025px){.sa-panel{display:none!important}}
+@media (max-width:1024px){.sa-menu{display:none}.sa-book{margin-left:auto}.sa-burger{display:flex}}
+@media (max-width:420px){.sa-book .bk-x{display:none}.sa-book{padding:10px 16px 10px 14px}}
+
+/* ---- the parts: white fields on the colour, one column of 1080, everything centred ------------------------- */
+main{display:block;padding-top:var(--gap)}
+main>section{width:calc(100% - 2 * var(--gut));max-width:var(--field);margin:0 auto var(--gap)}
+.sa-field{background:#fff;padding-block:clamp(48px,6vw,80px)}
+.sa-in{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;padding:clamp(32px,5vw,72px)}
+.sa-field>.sa-in:first-child{padding-top:0}
+.sa-field>.sa-in:last-child{padding-bottom:0}
+.sa-field>.sa-in:only-child{padding-block:0}
+.sa-field>.sa-sqs+.sa-in{padding-top:52px}
+.sa-field>.sa-in:has(+.sa-sqs){padding-bottom:0}
+.sa-field>.sa-in+.sa-sqs{margin-top:calc(clamp(20px,2.4vw,32px) + 20px)}
+.sa-in>h2:last-child{margin-bottom:0!important}
+.sa-in.sa-after:empty{display:none}
+.t-p{font-size:var(--p);line-height:1.5}
+.t-h2,.sa-in>h2{font-size:var(--h2);line-height:1.15}
+.t-h3,.t-ih,.t-step,.t-bstep{font-size:var(--h3);line-height:1.2}
+.sa-in>h2,.sa-in>.sa-lt,.sa-float>h2,.sa-revhead>h2,.sa-pwords>h2{margin-bottom:calc(clamp(20px,2.4vw,32px) - 2px)}
+.t-st{font-size:min(var(--h2),44px);line-height:1.15}
+/* a statement whose lines never break: on a phone a little smaller, so each line fits whole */
+@media (max-width:700px){.sa-in>h2.t-stw{font-size:min(var(--h2),6vw)}}
+.t-cap{font-size:18px;line-height:1.45}
+.sa-lt{line-height:0;max-width:100%}
+.sa-lt svg{margin:0 auto}
+.sa-ptag{width:min(460px,100%);margin:0 auto}
+/* a title and words floating on the colour (black on yellow and white, white on purple) */
+.sa-float{text-align:center;padding:0 clamp(16px,4vw,56px) clamp(36px,4vw,56px);display:flex;flex-direction:column;align-items:center;gap:22px}
+[data-c=p]>.sa-float,[data-c=p]>.sa-in.sa-titlein{color:#fff}
+.sa-float.sa-floatbtn{padding-top:clamp(36px,4vw,52px);padding-bottom:0}
+@media (max-width:700px){
+  main>section{width:100%;margin-bottom:clamp(56px,16vw,88px)}
+  .sa-field{padding-block:48px}
+  .sa-in{padding:32px 20px}
+  .sa-in>h2,.sa-in>.sa-lt,.sa-float>h2,.sa-revhead>h2,.sa-pwords>h2{margin-bottom:18px}
+  .sa-float{padding:0 20px 32px}
+}
+
+/* ---- buttons and pills ---------------------------------------------------------------------------------- */
+.sa-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.sa-btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;line-height:1.1;padding:12px 24px;border-radius:50px;border:1px solid #000;background:#000;color:#fff;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.sa-btn:hover{background:var(--orange);border-color:var(--orange);color:#000}
+.sa-btn.line{background:#fff;color:#000}
+.sa-btn.line:hover{background:var(--orange);border-color:var(--orange)}
+.sa-btn.big{background:var(--orange);border-color:var(--orange);color:#000;font-size:20px;padding:16px 32px}
+.sa-btn.big:hover{background:#000;border-color:#000;color:#fff}
+.sa-pill{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;line-height:1.1;padding:10px 22px 10px 14px;border-radius:50px;border:1px solid #000;background:#fff;color:#000;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background .2s,color .2s}
+.sa-pill .ic{--ic:22px}
+.sa-pill:hover{background:var(--orange)}
+.sa-pill[aria-pressed=true]{background:#000;color:#fff}
+/* the floating pills to the parts of a page: they stay under the top bar while you scroll */
+.sa-wnav{position:sticky;top:calc(var(--bar) + 12px);z-index:50;display:flex;gap:10px;width:fit-content;max-width:100%;margin:calc(var(--gap) * -.5 - 22px) auto calc(var(--gap) * .5 - 22px);padding:0 16px;overflow-x:auto;scrollbar-width:none;pointer-events:none}
+.sa-wnav::-webkit-scrollbar{display:none}
+.sa-wnav a{pointer-events:auto;flex:none;font-weight:700;font-size:18px;line-height:1.1;padding:10px 22px;border-radius:50px;border:2px solid #000;background:#000;color:#fff;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.sa-wnav a:hover{background:var(--orange);border-color:var(--orange);color:#000}
+.sa-wnav a[aria-current]{background:var(--orange);color:#000;border-color:#fff}
+@media (max-width:1024px){.sa-wnav{gap:8px}.sa-wnav a{font-size:16px;padding:8px 12px}}
+@media (max-width:700px){.sa-wnav{margin:calc(clamp(56px,16vw,88px) * -.5 - 20px) 0 calc(clamp(56px,16vw,88px) * .5 - 20px);width:100%;justify-content:flex-start;padding:0 20px;scroll-padding-inline:20px}.sa-wnav a{padding:8px 16px}}
+
+/* ---- the opening of the home page: two exact squares on Brazil Yellow ------------------------------------ */
+.sa-open{display:grid;grid-template-columns:repeat(2,var(--sq));gap:24px;justify-content:center}
+.sa-osq{aspect-ratio:1/1;position:relative;container-type:inline-size;display:flex;align-items:center;justify-content:center}
+.sa-osq.sa-white{background:#fff;padding:9%}
+.sa-oin{display:flex;flex-direction:column;align-items:center;gap:5cqw;width:100%;text-align:center}
+.sa-tstage{position:relative;width:100%;margin:0;line-height:0}
+.sa-ttag{display:block;width:100%;height:auto;overflow:visible}
+.inv{transform:translateY(260px);opacity:0;transition:transform .8s cubic-bezier(.6,0,.2,1),opacity .5s}
+.inv.on{transform:none;opacity:1}
+.inv.out{transform:translateY(-260px);opacity:0}
+.sa-tbullet{position:absolute;left:-7.5cqw;width:4.2cqw;height:4.2cqw;margin-top:-2.1cqw;display:block;transition:opacity .35s}
+.sa-tbullet.c{border-radius:50%}
+.sa-plain{font-size:max(var(--small),min(var(--kp),26px));line-height:1.4}
+.sa-osq .sa-btns{gap:10px}
+.sa-osq .sa-btn{font-size:var(--s17);padding:11px 22px}
+.sa-osq.sa-photo{background:var(--purple);padding:3%;flex-direction:column;gap:2.5cqw;color:#fff}
+.sa-osq.sa-photo img{display:block;height:86cqw;width:auto;max-width:100%}
+.sa-osq.sa-photo figcaption{font-size:max(var(--small),3.6cqw);line-height:1.35;text-align:center}
+@media (max-width:1024px){.sa-open{grid-template-columns:var(--sqo);gap:16px}}
+
+/* ---- squares: exact at every width, the words fitted (--k from the engine), capped at --p on a laptop ------ */
+.sa-sqs{display:grid;grid-template-columns:repeat(2,var(--sq));gap:24px;justify-content:center}
+.sa-sqs.n3{grid-template-columns:repeat(3,var(--sq3))}
+@media (max-width:1024px){.sa-sqs.n3{grid-template-columns:repeat(2,var(--sq))}}
+@media (max-width:700px){.sa-sqs,.sa-sqs.n3{grid-template-columns:var(--sq);gap:16px}}
+/* inside a white field the squares stand inset, white round them */
+.sa-sqs.sa-inset{grid-template-columns:repeat(2,min(450px,calc((100% - 24px) / 2)));padding-inline:clamp(32px,5vw,72px)}
+.sa-sqs.sa-inset.n3{grid-template-columns:repeat(3,calc((100% - 48px) / 3))}
+@media (max-width:1024px){.sa-sqs.sa-inset.n3{grid-template-columns:repeat(2,calc((100% - 24px) / 2))}}
+@media (max-width:700px){.sa-sqs.sa-inset,.sa-sqs.sa-inset.n3{grid-template-columns:100%;padding-inline:20px;gap:16px}.sa-field>.sa-sqs+.sa-in{padding-top:40px}.sa-field>.sa-in+.sa-sqs{margin-top:40px}}
+.sa-sq{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;padding:9%;container-type:inline-size;background:var(--bg,#fff);color:var(--fg,#000);text-decoration:none;text-align:center;transition:transform .35s cubic-bezier(.3,.7,.25,1)}
+a.sa-sq:hover{transform:translateY(-10px)}
+.sq-in{display:flex;flex-direction:column;align-items:center;gap:4.5cqw;width:100%;--ic:15cqw}
+/* squares with a title line up across their row: each part as high as the row's largest (the icon's slot, the title's
+   and the words' lines), so the centred blocks are equally high and titles, words and links stand at one height */
+.sq-ic{display:flex;align-items:center;justify-content:center;flex:none;height:calc(var(--ic) * var(--slot,1))}
+.sq-top .sq-h:has(.sq-lt){min-height:var(--hh)}
+.sq-top .sq-h:not(:has(.sq-lt)){min-height:calc(var(--hl,1) * 1.15em)}
+.sq-top .sq-t{min-height:calc(var(--tl,0) * 1em)}
+.sq-nogo{visibility:hidden}
+.sq-t{display:block;font-size:max(var(--small),min(var(--k),var(--p)));line-height:1.38}
+.sq-h{display:block;width:100%;font-weight:700;font-size:max(18px,min(calc(var(--k) * 1.3),calc(var(--p) * 1.3)));line-height:1.15}
+.sq-h .sq-lt{margin:0 auto}
+.sa-sq[style*="--fg:#fff"] .sq-lt path[fill="#000000"]{fill:#fff}
+.sq-go{display:block;font-weight:700;font-size:max(var(--small),min(var(--k),var(--p)));line-height:1.3}
+.sq-go b{display:inline-block;transition:translate .4s var(--ease)}
+a.sa-sq:hover .sq-go b{translate:6px 0}
+.sq-btn .sa-btn{font-size:var(--s17);padding:11px 22px}
+/* a white square on white gets a thin black line, so it stays a square */
+[data-c=w] .sa-sq[style*="--bg:#FFFFFF"],.sa-field .sa-sq[style*="--bg:#FFFFFF"]{box-shadow:inset 0 0 0 2px #000}
+/* the map: grey, in colour when pointed at */
+.sa-map{padding:0;overflow:hidden;filter:grayscale(1) contrast(1.05);transition:filter .5s}
+.sa-map:hover{filter:none}
+.sa-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sa-addr a{text-decoration:none;border-bottom:2px solid #000}
+/* the film beside the facts (About Collab's part) */
+.sa-film{padding:0;overflow:hidden}
+.sa-film video{position:absolute;left:50%;top:6%;height:88%;width:auto;aspect-ratio:9/16;translate:-50% 0;object-fit:cover;background:#000}
+/* About Sabor: the logo square, the five lines on Brazil Blue, what sabor means */
+.sa-sablogo{gap:8cqw}
+.sa-kick{font-weight:700;font-size:max(var(--small),5cqw);line-height:1.2}
+.sa-five{gap:0;font-size:max(var(--small),var(--k5));line-height:1.5}
+.sa-namesq{gap:0;line-height:1.1}
+.sa-namesq .ln{white-space:nowrap}
+.sa-lblock{display:flex;flex-direction:column;gap:22px;margin:0 auto;max-width:100%}
+.sa-sablogo .sa-lblock{gap:5cqw}
+
+/* ---- block icons: circles and squares only, a little motion when pointed at or tapped ------------------- */
+.ic{position:relative;display:block;flex:none;width:var(--ic,48px);height:var(--ic,48px)}
+.ic>i{position:absolute;display:block;transition:translate .5s var(--ease),scale .5s var(--ease)}
+.ic>i.c{border-radius:50%}
+.ic-quad>i{width:50%;height:50%}
+.ic-quad>i:nth-child(1){left:0;top:0}.ic-quad>i:nth-child(2){left:50%;top:0}.ic-quad>i:nth-child(3){left:0;top:50%}.ic-quad>i:nth-child(4){left:50%;top:50%}
+.ic-duo{height:calc(var(--ic,48px) * .5)}
+.ic-duo>i{width:50%;height:100%;top:0}.ic-duo>i:nth-child(1){left:0}.ic-duo>i:nth-child(2){left:50%}
+.ic-trio{height:calc(var(--ic,48px) / 3)}
+.ic-trio>i{width:33.333%;height:100%;top:0}.ic-trio>i:nth-child(1){left:0}.ic-trio>i:nth-child(2){left:33.333%}.ic-trio>i:nth-child(3){left:66.666%}
+.ic-table>i:nth-child(1){width:50%;height:50%;left:25%;top:25%}
+.ic-table>i:nth-child(n+2){width:22%;height:22%}
+.ic-table>i:nth-child(2){left:39%;top:-4%}.ic-table>i:nth-child(3){left:82%;top:39%}.ic-table>i:nth-child(4){left:39%;top:82%}.ic-table>i:nth-child(5){left:-4%;top:39%}
+.ic-stack{width:calc(var(--ic,48px) / 3)}
+.ic-stack>i{width:100%;height:33.333%;left:0}.ic-stack>i:nth-child(1){top:0}.ic-stack>i:nth-child(2){top:33.333%}.ic-stack>i:nth-child(3){top:66.666%}
+.ic-ring>i.r{inset:0;border-radius:50%;border:solid;border-width:calc(var(--ic,48px) * .235)}
+.ic-ring>i.c{width:53%;height:53%;left:23.5%;top:23.5%;scale:.6}
+/* a long table of three squares, three people on each side */
+.ic-long>i:nth-child(-n+3){width:26%;height:26%;top:37%}
+.ic-long>i:nth-child(1){left:7%}.ic-long>i:nth-child(2){left:37%}.ic-long>i:nth-child(3){left:67%}
+.ic-long>i:nth-child(n+4){width:18%;height:18%}
+.ic-long>i:nth-child(4){left:11%;top:8%}.ic-long>i:nth-child(5){left:41%;top:8%}.ic-long>i:nth-child(6){left:71%;top:8%}
+.ic-long>i:nth-child(7){left:11%;top:74%}.ic-long>i:nth-child(8){left:41%;top:74%}.ic-long>i:nth-child(9){left:71%;top:74%}
+/* the projection on the wall, two rows facing it */
+.ic-rows>i:nth-child(1){width:34%;height:34%;left:33%;top:2%}
+.ic-rows>i:nth-child(n+2){width:20%;height:20%}
+.ic-rows>i:nth-child(2){left:10%;top:48%}.ic-rows>i:nth-child(3){left:40%;top:48%}.ic-rows>i:nth-child(4){left:70%;top:48%}
+.ic-rows>i:nth-child(5){left:10%;top:78%}.ic-rows>i:nth-child(6){left:40%;top:78%}.ic-rows>i:nth-child(7){left:70%;top:78%}
+/* the bar and people standing round it */
+.ic-scatter>i:nth-child(1){width:28%;height:28%;left:4%;top:68%}
+.ic-scatter>i:nth-child(n+2){width:20%;height:20%}
+.ic-scatter>i:nth-child(2){left:42%;top:4%}.ic-scatter>i:nth-child(3){left:76%;top:26%}.ic-scatter>i:nth-child(4){left:12%;top:28%}
+.ic-scatter>i:nth-child(5){left:48%;top:44%}.ic-scatter>i:nth-child(6){left:72%;top:74%}
+/* About Sabor's Brazil Diamond (16.6 : 10.6) over a square */
+.ic-dia{width:calc(var(--ic,48px) * 1.2);height:calc(var(--ic,48px) * 1.532)}
+.ic-dia>i.d{width:100%;height:50%;left:0;top:0;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.ic-dia>i.s{width:63.86%;height:50%;left:18.07%;top:50%}
+.ic-dia2>i.s{width:50%;height:39.16%;left:0}
+.ic-dia2>i.s+i.s{left:50%}
+/* the motion: parts part, a circle hops, people sit down, a dot fills its ring; nothing turns */
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-quad>i:nth-child(1){translate:-12% -12%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-quad>i:nth-child(2){translate:12% -12%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-quad>i:nth-child(3){translate:-12% 12%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-quad>i:nth-child(4){translate:12% 12%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-duo>i:nth-child(2),
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-trio>i:nth-child(2),
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-dia>i.d{animation:sa-hop .8s var(--ease)}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-table>i:nth-child(2){translate:0 32%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-table>i:nth-child(3){translate:-32% 0}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-table>i:nth-child(4){translate:0 -32%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-table>i:nth-child(5){translate:32% 0}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-stack>i:nth-child(1){translate:0 -22%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-stack>i:nth-child(3){translate:0 22%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-ring>i.c{scale:1}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-long>i:nth-child(n+4):nth-child(-n+6){translate:0 32%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-long>i:nth-child(n+7){translate:0 -32%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-rows>i:nth-child(1){scale:1.12}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-rows>i:nth-child(n+2){translate:0 -18%}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-scatter>i:nth-child(n+2){animation:sa-hop .8s var(--ease)}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-scatter>i:nth-child(3){animation-delay:.08s}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-scatter>i:nth-child(4){animation-delay:.16s}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-scatter>i:nth-child(5){animation-delay:.24s}
+:is(.hov:hover,.hov:focus-visible,.hov.tap) .ic-scatter>i:nth-child(6){animation-delay:.32s}
+@keyframes sa-hop{0%,100%{translate:0 0}45%{translate:0 -40%}}
+
+/* ---- lists with block icons (or numbered shapes): two columns of 15em on a laptop -------------------------- */
+.sa-items{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,calc(76px + 22px + 15em));gap:44px 56px;justify-content:center;text-align:left;font-size:var(--p);margin-top:12px}
+.sa-items.sa-three{grid-template-columns:repeat(3,calc(15em));gap:44px 40px}
+.sa-items>li{display:grid;grid-template-columns:76px 1fr;column-gap:22px;align-items:start}
+.sa-items.sa-three>li{grid-template-columns:1fr;row-gap:16px;justify-items:center;text-align:center}
+.sa-icell{display:flex;align-items:center;justify-content:center;height:76px;--ic:56px}
+.sa-items h3{margin:0 0 8px;min-height:0}
+.sa-items>li>div{padding-top:calc((76px - 1.2 * var(--h3)) / 2)}
+.sa-items.sa-three>li>div{padding-top:0}
+@media (max-width:1100px){.sa-items.sa-three{grid-template-columns:repeat(2,15em)}}
+@media (max-width:999px){
+  .sa-items,.sa-items.sa-three{grid-template-columns:calc(48px + 14px + 15em);gap:36px}
+  .sa-items>li,.sa-items.sa-three>li{grid-template-columns:48px 1fr;column-gap:14px;justify-items:stretch;text-align:left}
+  .sa-icell{height:48px;--ic:40px}
+  .sa-items>li>div,.sa-items.sa-three>li>div{padding-top:calc((48px - 1.2 * var(--h3)) / 2)}
+}
+/* the four facts with block icons */
+.sa-facts{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;width:100%;margin-top:12px}
+.sa-facts>li{display:flex;flex-direction:column;align-items:center;gap:14px;--ic:52px}
+.sa-facts .ic{height:52px}
+.sa-facts .ic-duo,.sa-facts .ic-trio{height:26px;margin-block:13px}
+@media (max-width:999px){.sa-facts{grid-template-columns:repeat(2,1fr);row-gap:36px}}
+/* steps: a number in a shape, Studio About's pairs, the next colour when pointed at */
+.sa-steps{list-style:none;padding:0;counter-reset:st;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;width:100%;margin-top:12px}
+.sa-steps>li{counter-increment:st;display:flex;flex-direction:column;align-items:center;gap:18px}
+.sa-steps>li::before{content:counter(st);display:flex;align-items:center;justify-content:center;width:76px;height:76px;font-weight:700;font-size:30px;transition:background .45s,color .45s}
+.sa-steps>li:nth-child(4n+1)::before{background:var(--orange);color:#000}
+.sa-steps>li:nth-child(4n+2)::before{background:var(--purple);color:#fff;border-radius:50%}
+.sa-steps>li:nth-child(4n+3)::before{background:var(--green);color:#000}
+.sa-steps>li:nth-child(4n+4)::before{background:var(--blue);color:#fff;border-radius:50%}
+.sa-steps>li:nth-child(4n+1):hover::before{background:var(--green)}
+.sa-steps>li:nth-child(4n+2):hover::before{background:var(--blue)}
+.sa-steps>li:nth-child(4n+3):hover::before{background:var(--orange)}
+.sa-steps>li:nth-child(4n+4):hover::before{background:var(--purple)}
+@media (max-width:999px){.sa-steps{grid-template-columns:1fr 1fr;row-gap:40px}}
+@media (max-width:700px){.sa-steps{column-gap:16px}.sa-steps>li::before{width:56px;height:56px;font-size:22px}}
+/* a statement */
+.sa-statement{margin-bottom:calc(clamp(20px,2.4vw,32px) - 2px)}
+
+/* ---- photo beside words (the photo whole, the words centred on its height) ------------------------------- */
+.sa-prow{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1000px;width:100%;align-items:center;text-align:left}
+.sa-pphoto img{display:block;width:100%;height:auto}
+.sa-pwords{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.sa-pwords .sa-btns{justify-content:flex-start;margin-top:10px}
+@media (max-width:860px){.sa-prow{grid-template-columns:1fr;gap:28px}.sa-pphoto{max-width:460px;margin:0 auto}}
+
+/* ---- the photo rails: edge to edge, photos in their own 19:13 shape, running round while in view -------------- */
+.sa-railsec{background:transparent}
+.sa-railsec.sa-tight{margin-top:calc(20px - var(--gap));margin-bottom:50px}
+.sa-railsec>.sa-in{padding:0 clamp(16px,4vw,56px) calc(clamp(20px,2.4vw,32px) + 20px);gap:14px}
+.sa-railsec>.sa-in>h2{margin-bottom:0}
+.sa-railsec[data-c=p]>.sa-in{color:#fff}
+.sa-rail{position:relative;width:calc(100vw / var(--z));margin-left:calc(50% - 50vw / var(--z));overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;padding-block:30px;margin-block:-30px;cursor:grab}
+.sa-rail::-webkit-scrollbar{display:none}
+.sa-track{display:flex;gap:12px;width:max-content}
+.sa-ph{flex:none;position:relative;transition:transform .35s cubic-bezier(.3,.7,.25,1)}
+.sa-ph img{display:block;height:clamp(180px,19vw,280px);width:auto;aspect-ratio:19/13;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.sa-ph:hover{transform:scale(1.1);z-index:2}
+.sa-ph.pin{transform:translateY(-8px) scale(1.16);z-index:3}
+.sa-railcap{text-align:center;margin-top:22px;padding:0 20px}
+@media (max-width:700px){.sa-railsec.sa-tight{margin-top:calc(10px - clamp(56px,16vw,88px));margin-bottom:40px}}
+/* (a titled rail's words keep the one 20 px text edge on a phone) */
+@media (max-width:700px){.sa-railsec>.sa-in{padding-inline:20px}}
+
+/* ---- the review rail: About Collab's real Google reviews, white cards on Lush Green -------------------------- */
+.sa-revsec{position:relative}
+.sa-revhead{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;padding:0 20px 44px;color:var(--on,#000);transition:color .25s}
+.sa-revhead>h2{margin-bottom:0}
+.sa-badge{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 14px;font-size:18px}
+.sa-g{width:38px;height:38px;background:#fff;border-radius:50%;padding:6px;display:block}
+.sa-rating{font-weight:700;font-size:24px}
+.sa-stars{display:flex;gap:2px}
+.sa-stars svg,.sa-cstars svg{display:block;fill:var(--yellow)}
+.sa-stars svg{width:20px;height:20px}
+.sa-badge .sa-stars svg{fill:currentColor}
+.sa-all{display:inline-block;background:#fff;color:#000;border-radius:999px;padding:10px 22px;font-weight:700;font-size:18px;line-height:1.1;text-decoration:none;transition:background .2s,color .2s}
+.sa-all:hover{background:#000;color:#fff}
+.sa-carousel{position:relative}
+.sa-arrows{position:absolute;right:0;top:-62px;display:flex;gap:14px;z-index:3}
+.sa-arr{width:38px;height:38px;border-radius:50%;border:0;background:var(--on,#000);color:var(--off,#fff);font-size:24px;line-height:1;cursor:pointer;padding:0 0 3px;transition:background .2s,color .2s}
+.sa-arr:hover{background:var(--orange);color:#000}
+.sa-revtrack{list-style:none;display:flex;gap:25px;width:calc(100vw / var(--z));margin:-30px 0 -30px calc(50% - 50vw / var(--z));padding:30px 0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab}
+.sa-revtrack::-webkit-scrollbar{display:none}
+.sa-card{flex:0 0 340px;background:#fff;color:#000;padding:26px 26px 22px;display:flex;flex-direction:column;gap:12px;transition:transform .35s cubic-bezier(.3,.7,.25,1)}
+.sa-card:hover{transform:translateY(-6px) scale(1.04)}
+.sa-card.pin{transform:translateY(-12px) scale(1.07)}
+.sa-chead{display:flex;align-items:center;gap:14px}
+.sa-ava{position:relative;flex:none;width:42px;height:42px;border-radius:50%;background:var(--a);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.sa-ava::after{content:'';position:absolute;right:-7px;bottom:-4px;width:15px;height:15px;background:var(--s);box-shadow:0 0 0 2px #fff}
+.sa-rwho{display:flex;flex-direction:column;min-width:0}
+.sa-rname{font-weight:700;font-size:18px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sa-meta{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.sa-cstars{display:flex;gap:1px}
+.sa-cstars svg{width:14px;height:14px}
+.sa-when{font-size:var(--small)}
+.sa-txt{font-size:18px;line-height:1.45;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.sa-tr{font-size:var(--small)}
+.sa-more{align-self:flex-start;margin-top:auto;background:none;border:0;padding:0;font-weight:700;font-size:18px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;color:#000}
+@media (max-width:767px){.sa-arrows{display:none}.sa-card{flex-basis:min(82vw,320px)}}
+/* a few reviews (fewer than five) stand still side by side, each once; on the food page in full */
+.sa-revrow{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:20px;padding:0;margin:0}
+.sa-revrow .sa-card{flex:1 1 290px;max-width:340px}
+.sa-revrow.sa-whole .sa-card{flex:1 1 420px;max-width:480px}
+@media (max-width:700px){.sa-revrow{padding:0 20px}}
+.sa-revrow.sa-whole .sa-txt{-webkit-line-clamp:unset;display:block;overflow:visible}
+.sa-revrow .sa-card:hover{transform:translateY(-6px)}
+/* the review, whole, in a box over the page */
+.sa-lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.sa-lb[hidden]{display:none}
+.sa-lb-bg{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.sa-lb-card{position:relative;background:#fff;width:100%;max-width:620px;max-height:84vh;overflow:auto;padding:36px 32px 30px;display:flex;flex-direction:column;gap:12px}
+.sa-lb-card .sa-txt{-webkit-line-clamp:unset;display:block;overflow:visible}
+.sa-lb-card .sa-more{display:none}
+.sa-lb-x{position:absolute;top:8px;right:10px;width:40px;height:40px;border:0;background:none;font-size:30px;line-height:1;cursor:pointer}
+
+/* ---- the 3D drawing of the event floor (space3d.js mounts it; the stills when there is no WebGL) ------------- */
+.sa3d{width:100%;display:flex;flex-direction:column;align-items:center;gap:18px}
+.sa3d-stage{position:relative;width:100%;aspect-ratio:16/9;background:#fff;border:10px solid #fff;outline:1px solid rgba(0,0,0,.14);outline-offset:0;overflow:hidden}
+.sa3d-canvas,.sa3d-still,.sa3d-turn{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sa3d-canvas{touch-action:pan-y;cursor:grab}
+.sa3d-canvas:active{cursor:grabbing}
+.sa3d-still{object-fit:contain;background:#fff}
+/* the turntable without WebGL (space3d.js draws the frames on it, over the still): fades in once its frames are there;
+   a sideways drag turns it, an upright swipe still scrolls the page; the arrow keys turn it when it has focus */
+.sa3d-turn{object-fit:contain;background:#fff;opacity:0;transition:opacity .32s;touch-action:pan-y;cursor:grab}
+.sa3d-turn.on{opacity:1}
+.sa3d-turn.drag{cursor:grabbing}
+.sa3d-turn:focus{outline:none}
+.sa3d-turn:focus-visible{outline:3px solid #000;outline-offset:-3px}
+@media (prefers-reduced-motion:reduce){.sa3d-turn{transition:none}}
+.sa3d-still[hidden],.sa3d-canvas[hidden],.sa3d-turn[hidden]{display:none}
+.sa3d-zoom{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:2}
+.sa3d-zoom[hidden]{display:none}
+.sa3d-zoom button{width:44px;height:44px;border-radius:50%;border:1px solid #000;background:#fff;color:#000;font-weight:700;font-size:24px;line-height:1;cursor:pointer;padding:0 0 2px;transition:background .2s}
+.sa3d-zoom button:hover{background:var(--cyan)}
+.sa3d-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.sa3d-cap{font-size:var(--p);line-height:1.4;min-height:1.4em}
+.sa3d[data-size=page] .sa3d-pills,.sa3d[data-size=page] .sa3d-cap{padding:0 20px}
+/* how to use the drawing: in the 3D, drag to turn and come closer; in the turntable (no WebGL), drag to turn, no zoom;
+   with the plain stills (the turntable's frames did not load), how the set-ups switch */
+.sa-3dpart:has(.sa3d[data-sa3d=still]) :is(.sa-how-move,.sa-how-gl,.sa-how-turn),
+.sa-3dpart:has(.sa3d[data-sa3d=turn]) :is(.sa-how-gl,.sa-how-still),
+.sa-3dpart:not(:has(.sa3d[data-sa3d=still],.sa3d[data-sa3d=turn])) :is(.sa-how-turn,.sa-how-still){display:none}
+/* 4 : 3 only on narrow screens: at 1024 x 768 a 4 : 3 stage would stand taller than the screen with its pills */
+@media (max-width:820px){.sa3d-stage{aspect-ratio:4/3}}
+/* the stills and the turntable's frames are 16 : 9: without WebGL the stage takes their shape, so they are never
+   letterboxed on a phone */
+.sa3d:is([data-sa3d=still],[data-sa3d=turn]) .sa3d-stage{aspect-ratio:16/9}
+/* on a phone the + and − sit side by side in the empty corner bottom left, off the hall's right end */
+@media (max-width:700px){.sa3d-zoom{right:auto;left:8px;bottom:8px;flex-direction:row}}
+@media (max-width:700px){.sa3d-stage{border-width:6px}.sa3d .sa-pill{font-size:var(--small);padding:9px 16px 9px 12px}}
+
+/* ---- the FAQ: white, a Purple Rain plus that turns Happy Juice when open --------------------------------- */
+.sa-faq{width:min(860px,100%);text-align:left;margin-top:12px}
+/* (right under a title the lists add nothing to the title's own gap) */
+.sa-in>h2+:is(.sa-items,.sa-facts,.sa-steps,.sa-faq){margin-top:0}
+.sa-faq details{border:1px solid rgba(0,0,0,.14);margin-bottom:8px;background:#fff}
+.sa-faq summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;padding:12px 22px;cursor:pointer}
+.sa-faq summary::-webkit-details-marker{display:none}
+.t-q{font-size:var(--h3);line-height:1.3;font-weight:700}
+.sa-plus{position:relative;flex:none;width:18px;height:18px}
+.sa-plus i{position:absolute;left:0;top:8px;width:18px;height:2px;background:var(--purple);transition:background .2s,scale .25s}
+.sa-plus i:nth-child(2){left:8px;top:0;width:2px;height:18px}
+details[open] .sa-plus i{background:var(--orange)}
+details[open] .sa-plus i:nth-child(2){scale:1 0}
+.sa-a{border-top:1px solid rgba(0,0,0,.14);padding:16px 22px 20px}
+
+/* ---- the closing call and the foot -------------------------------------------------------------------- */
+.sa-close .sa-btns,.sa-close .sa-btn{margin-top:10px}
+.sa-foot{background:var(--purple);color:#fff;padding:clamp(56px,7vw,96px) var(--gut) clamp(40px,5vw,64px)}
+.sa-foot-in{max-width:var(--field);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(40px,5vw,60px);text-align:center}
+.sa-fcols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;width:100%}
+.sa-fcol{display:flex;flex-direction:column;align-items:center;gap:12px;--ic:36px}
+.sa-fcol .ic-duo,.sa-fcol .ic-trio{margin-block:9px}
+.sa-fh{font-weight:700;font-size:20px;line-height:1.2}
+.t-foot{font-size:18px;line-height:1.5}
+.t-foot a{text-decoration:none;border-bottom:2px solid currentColor}
+.sa-fpages{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;font-weight:700;font-size:18px}
+.sa-fpages a{text-decoration:none;border-bottom:2px solid transparent}
+.sa-fpages a:hover{border-color:#fff}
+.sa-fend{font-size:18px;font-weight:700}
+@media (max-width:760px){.sa-fcols{grid-template-columns:1fr;gap:36px}}
+
+/* back to the top: a Happy Juice square; on a phone a small white circle with a thin arrow */
+.sa-totop{position:fixed;right:20px;bottom:20px;z-index:90;width:44px;height:44px;background:var(--orange);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.sa-totop.on{opacity:1;pointer-events:auto}
+.sa-totop::before{content:'';width:11px;height:11px;border-left:2px solid #000;border-top:2px solid #000;transform:translateY(3px) rotate(45deg)}
+@media (max-width:700px){
+  .sa-totop{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.18);right:14px;bottom:calc(16px + env(safe-area-inset-bottom))}
+  .sa-totop::before{width:9px;height:9px;border-width:1.5px}
+  /* room under the foot's last line, so the button never covers "created in Amsterdam" at the very end */
+  .sa-foot{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+}
+
+/* ---- the booking page ---------------------------------------------------------------------------------- */
+.sa-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px}
+.sa-tab{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:18px;line-height:1.1;background:#fff;color:#000;border:2px solid #000;border-radius:50px;padding:11px 22px 11px 16px;cursor:pointer;--ic:28px}
+.sa-tab.on{background:#000;color:#fff}
+.sa-bgrid{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;padding:0 clamp(32px,5vw,72px);text-align:left}
+.sa-pane{display:none}
+.sa-pane.on{display:block}
+.sa-pane>.t-pane{margin-bottom:24px}
+.sa-step{display:grid;grid-template-columns:60px 1fr;gap:18px;padding:28px 0;border-top:1px solid rgba(0,0,0,.14)}
+.sa-step:first-child{border-top:0;padding-top:0}
+.sa-form{counter-reset:bs}
+.sa-sn{counter-increment:bs;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px}
+.sa-sn::before{content:counter(bs)}
+.sa-step:nth-child(4n+1) .sa-sn{background:var(--orange);color:#000}
+.sa-step:nth-child(4n+2) .sa-sn{background:var(--purple);color:#fff;border-radius:50%}
+.sa-step:nth-child(4n+3) .sa-sn{background:var(--green);color:#000}
+.sa-step:nth-child(4n+4) .sa-sn{background:var(--blue);color:#fff;border-radius:50%}
+.sa-sb h3{font-size:var(--h3);line-height:1.2;margin:6px 0 16px}
+.sa-chips{display:flex;flex-wrap:wrap;gap:10px}
+.sa-chip{font-size:var(--small);font-weight:700;background:#fff;color:#000;border:2px solid #000;border-radius:50px;padding:8px 16px;cursor:pointer;transition:background .2s}
+.sa-chip:hover{background:var(--orange);border-color:var(--orange)}
+.sa-chip.on{background:#000;color:#fff;border-color:#000}
+.sa-as2 .sa-chip.on{background:var(--blue);border-color:var(--blue)}
+.sa-ac2 .sa-chip.on{background:var(--purple);border-color:var(--purple)}
+.sa-ppl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sa-ppl input[type=number]{width:100px;font:inherit;font-weight:700;font-size:28px;text-align:center;border:2px solid #000;padding:6px;background:#fff;color:#000}
+.sa-pm{width:48px;height:48px;border-radius:50%;border:2px solid #000;background:#fff;font-size:24px;line-height:1;cursor:pointer;padding:0 0 3px}
+.sa-pm:hover{background:var(--cyan);border-color:var(--cyan)}
+.sa-ppl input[type=range]{flex:1;min-width:180px;accent-color:#FF6501}
+.sa-hint{font-size:var(--s17);line-height:1.45;margin-top:12px}
+/* two set-ups to a row at every width: three to a row left a card too narrow for "the whole floor," on a laptop */
+.sa-setpick{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.sa-sp{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;font-size:var(--small);background:#fff;color:#000;border:2px solid rgba(0,0,0,.14);padding:14px;cursor:pointer;--ic:40px;transition:border-color .2s,opacity .2s}
+.sa-sp .ic{margin-bottom:6px}
+.sa-sp .ic-duo,.sa-sp .ic-trio{margin-block:10px 16px}
+.sa-sp b{font-size:var(--s17)}
+.sa-sp .cap{font-size:var(--small);line-height:1.3}
+.sa-sp.on{border-color:#000}
+.sa-sp.no{border-style:dashed;border-color:#000;cursor:not-allowed}
+.sa-sp.no .ic{visibility:hidden}
+.sa-cal{max-width:440px;border:2px solid transparent;padding:4px}
+.sa-cal.bad{border-color:var(--orange)}
+.sa-calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sa-calh b{font-size:18px}
+.sa-calh button{width:40px;height:40px;border-radius:50%;border:2px solid #000;background:#fff;cursor:pointer;font-size:18px}
+.sa-calg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.sa-dw{font-weight:700;font-size:var(--small);padding-bottom:4px}
+.sa-day{aspect-ratio:1/1;border-radius:50%;border:1px solid rgba(0,0,0,.25);background:#fff;font:inherit;font-size:var(--small);cursor:pointer;transition:background .2s;display:block;padding:0;color:#000}
+.sa-day:hover{background:var(--cyan);border-color:var(--cyan)}
+.sa-day.on{background:var(--orange);border-color:var(--orange);border-radius:0;font-weight:700}
+.sa-win{display:flex;gap:24px;margin-top:18px;flex-wrap:wrap}
+.sa-win label{display:flex;align-items:center;gap:10px;font-weight:700;font-size:var(--s17)}
+.sa-win select,#sfrom{font:inherit;font-size:var(--s17);border:2px solid #000;padding:8px 10px;background:#fff;color:#000}
+.sa-add{border:2px solid rgba(0,0,0,.14);padding:18px;margin-bottom:14px}
+.sa-addh{display:flex;align-items:center;gap:18px;margin-bottom:14px;flex-wrap:wrap;--ic:40px}
+.sa-addh p{font-size:var(--s17);line-height:1.45}
+.sa-addh .sa-lblock{gap:12px}
+.sa-addh .ic-trio{margin-block:4px}
+.sa-incl{display:flex;align-items:center;gap:10px;font-size:var(--s17);margin-top:6px}
+.sa-incl i{width:16px;height:16px;border-radius:50%;background:var(--purple);display:block;flex:none}
+.sa-who{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sa-who label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:var(--s17)}
+.sa-who label i{font-weight:300;font-style:normal}
+.sa-lt2{display:block}
+.sa-lhint{display:block;font-weight:300;font-size:var(--s17);line-height:1.45}
+.sa-who .full{grid-column:1/-1}
+.sa-who input,.sa-who textarea{font:inherit;font-weight:300;font-size:var(--s17);border:2px solid #000;padding:10px 12px;background:#fff;color:#000}
+.sa-form .bad{border-color:var(--orange)!important;box-shadow:0 0 0 2px var(--orange)}
+.sa-send{justify-content:flex-start;margin-top:28px}
+.sa-sum{position:sticky;top:calc(var(--bar) + 24px)}
+.sa-sumin{background:#fff;border:2px solid #000;padding:24px}
+.sa-sumh{display:flex;align-items:center;gap:12px;font-weight:700;font-size:22px;margin-bottom:12px;--ic:30px}
+.sa-sl{display:grid;grid-template-columns:1fr;gap:2px;padding:10px 0;border-top:1px solid rgba(0,0,0,.14);font-size:var(--small);line-height:1.4}
+.sa-sl>span{white-space:nowrap}
+.sa-sl>b{display:block}
+.sa-sl.warn b{box-shadow:inset 0 -3px 0 var(--orange)}
+.sa-price{border:2px dashed #000;padding:14px;margin:18px 0}
+.sa-price b{font-size:var(--small)}
+.sa-price p{font-size:var(--small);line-height:1.45;margin-top:6px}
+.sa-sumnote{font-size:var(--small);line-height:1.45}
+.sa-thanks{position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:210;display:flex;align-items:center;justify-content:center;padding:24px}
+.sa-thanks[hidden]{display:none}
+.sa-thin{max-width:540px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px}
+.sa-big{display:block;width:90px;height:90px;border-radius:50%;background:var(--purple)}
+.sa-thx{font-weight:700;font-size:var(--h2);line-height:1.1}
+/* the summary a little wider on a laptop, so its labels ("About Collab", "With the room") stay on one line and the
+   set-up beside them breaks only after "Workshop, at tables," */
+@media (min-width:1101px){.sa-bgrid{grid-template-columns:1fr 380px}}
+@media (max-width:999px){.sa-bgrid{grid-template-columns:1fr}.sa-sum{position:static}}
+@media (max-width:700px){
+  .sa-bgrid{padding:0 20px}
+  .sa-step{grid-template-columns:1fr;gap:12px}
+  .sa-setpick{grid-template-columns:1fr 1fr}
+  .sa-who{grid-template-columns:1fr}
+}
+
+/* less motion for those who ask for it: the rails stand still (they scroll by hand), nothing hops */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
