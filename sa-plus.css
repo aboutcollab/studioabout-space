@@ -91,6 +91,13 @@ main :is(h1,h2,h3){text-wrap:balance}
 .sa-sumin .r-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0 6px;border-top:2px solid #000;font-weight:800;font-size:22px}
 .sa-sumin .r-sub{display:flex;justify-content:space-between;gap:12px;font-size:var(--small);padding:3px 0}
 .sa-sumin .r-note,.sa-sumin .r-empty{font-size:var(--small);line-height:1.45;margin-top:12px}
+/* the empty calculator (Helena, 29 Oct 2026): the four questions, ticked as they are answered */
+.sa-sumin .r-todo{list-style:none;margin:14px 0 0;padding:0}
+.sa-sumin .r-todo li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid rgba(0,0,0,.14);font-size:var(--small);line-height:1.35}
+.sa-sumin .r-todo li span{flex:none;display:grid;place-items:center;width:30px;height:30px;border:2px solid #000;border-radius:50%;font-weight:800;font-size:15px}
+.sa-sumin .r-todo li.ok{opacity:.5}
+.sa-sumin .r-todo li.ok span{background:#000;color:#fff}
+.sa-num input::placeholder{color:rgba(0,0,0,.3)}
 .sa-sumin .r-warn{font-size:var(--small);line-height:1.45;margin-top:10px;padding:10px;background:var(--yellow)}
 .sa-sumin .r-meta{font-size:var(--small);line-height:1.45;padding-bottom:6px}
 .sa-sendnote{font-size:var(--s17);line-height:1.45;margin-top:14px;max-width:34em}
