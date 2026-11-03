@@ -328,3 +328,8 @@ main :is(h1,h2,h3){text-wrap:balance}
 /* the studios page's opening: the drawing of the deck (the row) on white, so the green studio 3 never sinks into the green page */
 .sa-fillsq.sa-deckfig{background:#fff}
 .sa-fillsq.sa-deckfig svg{width:100%;height:100%;display:block}
+/* the drawing's second chip: open the full 3D model (Helena, 3 Nov 2026); on a phone it moves to the top so the two chips never meet */
+.sa-deckfig{position:relative}
+.sa-chipbtn{position:absolute;right:14px;bottom:14px;background:var(--orange);color:#000;border:0;text-decoration:none;font:inherit;font-weight:700;font-size:var(--small);line-height:1.2;padding:8px 14px;border-radius:50px;cursor:pointer}
+.sa-chipbtn:focus-visible{outline:3px solid #000;outline-offset:2px}
+@media (max-width:560px){.sa-chipbtn{bottom:auto;top:14px}}
