@@ -320,3 +320,11 @@ main :is(h1,h2,h3){text-wrap:balance}
 @media (min-width:1000px){
   .sa-sqs.sa-doors6.sa-six{--sq6:min(400px, calc((100vw / var(--z) - 2 * var(--gut) - 40px) / 3));gap:20px}
 }
+/* a taken studio: the gallery red dot, like a sold work (Helena, 3 Nov 2026). The red is outside Peter's colours on purpose:
+   that is what makes it read as a gallery dot. Same dot as the bullet of "one already taken" in the opening. */
+.sa-fsq.sa-taken{position:relative}
+.sa-fsq.sa-taken .sa-dot{position:absolute;top:9%;right:9%;width:16%;aspect-ratio:1;border-radius:50%;background:#E3121B;box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.sa-proof span.sa-gone i{border-radius:50%;background:#E3121B!important}
+/* the studios page's opening: the drawing of the deck (the row) on white, so the green studio 3 never sinks into the green page */
+.sa-fillsq.sa-deckfig{background:#fff}
+.sa-fillsq.sa-deckfig svg{width:100%;height:100%;display:block}
